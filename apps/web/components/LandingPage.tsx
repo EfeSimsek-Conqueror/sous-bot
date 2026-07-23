@@ -51,6 +51,19 @@ const FEATURE_CARDS = FEATURES.map(
     </div>`
 ).join("");
 
+// The real Sousbot brand mark (steaming-pot glyph, from brand/logo-mark.svg),
+// inlined so the landing carries the actual logo with no external asset
+// dependency (works identically on Vercel and locally). Rendered white on the
+// terracotta tile — matching the app icon.
+const potGlyph = (px: number) => `<svg width="${px}" height="${px}" viewBox="10 2 80 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; color: #FFF7EF;">
+  <path d="M40 8c-5 6 5 11 0 18" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  <path d="M60 8c-5 6 5 11 0 18" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  <rect x="20" y="33" width="60" height="7" rx="3.5" fill="currentColor"/>
+  <path d="M26 46h48v20a14 14 0 0 1-14 14H40a14 14 0 0 1-14-14z" fill="currentColor"/>
+  <rect x="14" y="50" width="7" height="12" rx="3.5" fill="currentColor"/>
+  <rect x="79" y="50" width="7" height="12" rx="3.5" fill="currentColor"/>
+</svg>`;
+
 const BASE_CSS = `
 .sb-landing { background: #171210; color: #F3E9DE; }
 .sb-landing a { color: #D68D50; text-decoration: none; }
@@ -320,10 +333,7 @@ const MARKUP = `
           <footer style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; padding: 0 8px;">
             <div style="display: flex; align-items: center; gap: 10px;">
               <div style="width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(145deg, #DE9A5E, #C97F41); display: grid; place-items: center;">
-                <div style="display: grid; justify-items: center; gap: 1.5px;">
-                  <div style="width: 10px; height: 1.5px; border-radius: 2px; background: #FFF7EF;"></div>
-                  <div style="width: 13px; height: 8px; border-radius: 1.5px 1.5px 4px 4px; background: #FFF7EF;"></div>
-                </div>
+                ${potGlyph(16)}
               </div>
               <span style="font-size: 14.5px; font-weight: 700;">Sousbot</span>
               <span style="font-size: 13px; color: #8E7F6F;">· sousbot.ai</span>
@@ -351,10 +361,7 @@ const MARKUP = `
   <nav data-screen-label="Nav" style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 14px 48px; background: rgba(23,18,16,0.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(243,233,222,0.07);">
     <div style="display: flex; align-items: center; gap: 12px;">
       <div style="width: 36px; height: 36px; border-radius: 9px; background: linear-gradient(145deg, #DE9A5E, #C97F41); display: grid; place-items: center; box-shadow: 0 4px 14px rgba(214,141,80,0.35);">
-        <div style="display: grid; justify-items: center; gap: 2px;">
-          <div style="width: 14px; height: 2px; border-radius: 2px; background: #FFF7EF;"></div>
-          <div style="width: 18px; height: 11px; border-radius: 2px 2px 6px 6px; background: #FFF7EF;"></div>
-        </div>
+        ${potGlyph(22)}
       </div>
       <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">Sousbot</span>
     </div>
