@@ -375,12 +375,21 @@ export function LandingPage() {
 
   // Keep the latest enter() handler reachable from the vanilla listeners wired
   // once in the effect below, without re-running the effect on every render.
+  // A busy guard stops a double-tap from spawning two anonymous users; on
+  // success the component unmounts (session appears) so it never needs reset.
+  const busyRef = useRef(false);
   const enterRef = useRef(() => {});
   enterRef.current = async () => {
+    if (busyRef.current) return;
+    busyRef.current = true;
     try {
       await mockSignIn();
     } catch (err) {
-      toast.show(err instanceof Error ? err.message : "Couldn't start — try again", "error");
+      busyRef.current = false;
+      toast.show(
+        err instanceof Error ? err.message : "Couldn't start — please try again",
+        "error"
+      );
     }
   };
 
@@ -477,29 +486,29 @@ export function LandingPage() {
       });
     }
 
-    // --- smooth-scroll nav / dots ---
+    // --- clicks: one delegated listener on the root so every "Get started
+    // free" / "Go Pro" CTA and every nav/dot link works regardless of when
+    // its node entered the DOM (no per-element attach timing to get wrong). ---
     const goTo = (i: number) => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       window.scrollTo({ top: (i / (STOPS - 1)) * max, behavior: "smooth" });
     };
-    root.querySelectorAll<HTMLElement>("[data-goto]").forEach((el) => {
-      const handler = (ev: Event) => {
-        ev.preventDefault();
-        goTo(Number(el.getAttribute("data-goto")));
-      };
-      el.addEventListener("click", handler);
-      cleanups.push(() => el.removeEventListener("click", handler));
-    });
-
-    // --- product CTAs → mock sign-in (enter the app) ---
-    root.querySelectorAll<HTMLElement>("[data-cta-enter]").forEach((el) => {
-      const handler = (ev: Event) => {
+    const onRootClick = (ev: MouseEvent) => {
+      const target = ev.target as HTMLElement | null;
+      const cta = target?.closest?.("[data-cta-enter]");
+      if (cta) {
         ev.preventDefault();
         enterRef.current();
-      };
-      el.addEventListener("click", handler);
-      cleanups.push(() => el.removeEventListener("click", handler));
-    });
+        return;
+      }
+      const go = target?.closest?.("[data-goto]");
+      if (go) {
+        ev.preventDefault();
+        goTo(Number(go.getAttribute("data-goto")));
+      }
+    };
+    root.addEventListener("click", onRootClick);
+    cleanups.push(() => root.removeEventListener("click", onRootClick));
 
     // --- pricing monthly/annual toggle ---
     let annual = true;
