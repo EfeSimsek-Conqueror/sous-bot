@@ -1,0 +1,53 @@
+ANDROID SDK SETUP - USS-ENTERPRISE
+===================================
+
+COMPLETED:
+----------
+1. Downloaded & installed Android SDK command-line tools v11076708
+   - Location: /home/Koragan/Android/Sdk/cmdline-tools/latest/bin/sdkmanager
+
+2. SDK packages installed:
+   - platform-tools v37.0.0 (adb, fastboot, etc)
+   - platforms;android-35 (API 35)
+   - build-tools;35.0.0
+   - emulator v36.6.11
+   - system-images;android-35;google_apis;x86_64
+
+3. Android Virtual Device created:
+   - Name: sousbot
+   - Device: pixel_7
+   - System Image: Android 35 (API 35) with Google APIs
+   - Verified: emulator -list-avds shows "sousbot"
+
+4. Environment script created:
+   - Path: /home/Koragan/projects/sousbot/android-env.sh
+   - Exports: ANDROID_HOME, ANDROID_SDK_ROOT, JAVA_HOME, PATH
+
+5. Total SDK size: 4.8 GB
+
+STILL REQUIRED (need sudo password):
+-------------------------------------
+
+1. Install JDK 21 devel (required for Android Gradle Plugin compatibility):
+   sudo dnf install -y java-21-openjdk-devel
+
+2. Apply SELinux execheap fix (required to run emulator without crash):
+   sudo setsebool -P selinuxuser_execheap 1
+
+CURRENT STATUS:
+----------------
+- Build tools: READY
+- ADB: WORKING (v37.0.0)
+- Emulator: INSTALLED (but cannot run yet without SELinux fix)
+- Java: Using v25 (not ideal; JDK 21 needed for proper Gradle builds)
+
+After running the two sudo commands above, the toolchain will be fully ready for:
+- Building Kotlin/Jetpack Compose apps
+- Running headless emulator for screenshots
+- Full development workflow
+
+VERIFICATION COMMANDS (run with source /home/Koragan/projects/sousbot/android-env.sh):
+- sdkmanager --list_installed
+- adb version
+- java -version
+- emulator -list-avds

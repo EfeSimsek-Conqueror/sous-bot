@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base app theme. All real theming (colors, typography) happens in Compose (Theme.kt) -
+         this XML theme exists only to satisfy the manifest / splash requirements and set the
+         dark glass background before Compose takes over, avoiding a white flash. -->
+    <style name="Theme.Sousbot" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/glass_bg_base</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
+    </style>
+</resources>

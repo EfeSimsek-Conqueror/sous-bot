@@ -1,0 +1,244 @@
+{
+  "$schema": "sousbot-design-tokens-v1",
+  "meta": {
+    "source": "Forkful design doc (_design/), rebranded to Sousbot",
+    "brandAccentRemap": {
+      "from": ["#9FCBAB (glass)", "#3E7B4F (v1)", "#3B6B47 (android)"],
+      "to": "#D68D50"
+    },
+    "note": "Two themes exist in the source: 'glass' (dark, canonical) and 'light' (v1, legacy — used only for screens Glass never covered). Android uses its own Material 3 palette layered on the same accent. All three are represented below with the terracotta remap already applied."
+  },
+
+  "color": {
+    "brand": {
+      "accent": "#D68D50",
+      "accentHover": "#CD7830",
+      "accentPressed": "#AC6428",
+      "accentLight": "#E0A97B",
+      "accentSubtleBgLight": "#F8EFE7",
+      "accentSubtleBorderLight": "#EED7C4",
+      "accentSubtleBgDark": "#51361F",
+      "accentTextOnTint": "#9D5C25",
+      "accentOnDarkBorder": "#B26D34",
+      "accentDisabled": "#BCA48F",
+      "onAccent": "#2A1B10",
+      "onAccentNote": "Dark warm text on solid accent fills, NOT white. Contrast-checked: white-on-#D68D50 = 2.7:1 (fails WCAG AA); #2A1B10-on-#D68D50 = 6.2:1 (passes).",
+      "accentAlpha": {
+        "10": "rgba(214,141,80,0.10)",
+        "12": "rgba(214,141,80,0.12)",
+        "14": "rgba(214,141,80,0.14)",
+        "18": "rgba(214,141,80,0.18)",
+        "25": "rgba(214,141,80,0.25)",
+        "30": "rgba(214,141,80,0.30)",
+        "35": "rgba(214,141,80,0.35)",
+        "40": "rgba(214,141,80,0.40)",
+        "45": "rgba(214,141,80,0.45)"
+      }
+    },
+    "pro": {
+      "_comment": "Secondary accent for Pro-gating / missing-ingredient / error states. Deliberately shifted redder/darker than brand.accent to avoid hue collision now that brand accent is itself warm/terracotta.",
+      "light": "#C1502A",
+      "dark": "#D9673D",
+      "textOnTintLight": "#A34526",
+      "tintBgLight": "#F7E9E1",
+      "tintBorderLight": "#E5BFA9",
+      "android": "#C1502A"
+    },
+    "uncertainDetection": {
+      "_comment": "Low-confidence ingredient chip, e.g. 'cream · 62%?'",
+      "light": { "bg": "#FBF3E4", "border": "#E4C989", "text": "#8A6A1F" },
+      "android": { "bg": "#F3E7C9", "border": "#C9A94E", "text": "#6E5716" }
+    },
+
+    "themes": {
+      "glassDark": {
+        "_comment": "Canonical Sousbot dark theme",
+        "bgGradient": "linear-gradient(170deg,#231E1A 0%,#12181A 55%,#101314 100%)",
+        "bgGradientFlat": "linear-gradient(170deg,#151A17 0%,#0F1213 100%)",
+        "bloomAccent": "radial-gradient(90% 60% at 85% -5%, rgba(214,141,80,.28) 0%, rgba(214,141,80,0) 60%)",
+        "bloomPro": "radial-gradient(70% 50% at 0% 100%, rgba(217,103,61,.22) 0%, rgba(217,103,61,0) 60%)",
+        "textPrimary": "#F4F0E6",
+        "textBase": "#E9E4D8",
+        "textAlpha": {
+          "70": "rgba(233,228,216,0.70)",
+          "65": "rgba(233,228,216,0.65)",
+          "60": "rgba(233,228,216,0.60)",
+          "55": "rgba(233,228,216,0.55)",
+          "50": "rgba(233,228,216,0.50)",
+          "45": "rgba(233,228,216,0.45)",
+          "40": "rgba(233,228,216,0.40)",
+          "35": "rgba(233,228,216,0.35)",
+          "30": "rgba(233,228,216,0.30)"
+        },
+        "textOnCream": "#14171A",
+        "glass": {
+          "panelBg": {
+            "low": "rgba(255,255,255,0.04)",
+            "mid": "rgba(255,255,255,0.06)",
+            "high": "rgba(255,255,255,0.07)",
+            "hero": "rgba(255,255,255,0.09)"
+          },
+          "navBarBg": "rgba(30,36,32,0.55)",
+          "border": {
+            "subtle": "rgba(255,255,255,0.12)",
+            "hero": "rgba(255,255,255,0.16)",
+            "button": "rgba(255,255,255,0.18)"
+          },
+          "innerShine": {
+            "subtle": "inset 0 1px 0 rgba(255,255,255,0.12)",
+            "mid": "inset 0 1px 0 rgba(255,255,255,0.16)",
+            "hero": "inset 0 1px 0 rgba(255,255,255,0.20)"
+          },
+          "blur": {
+            "sm": "blur(10px)",
+            "md": "blur(12px)",
+            "lg": "blur(14px)",
+            "xl": "blur(18px) saturate(160%)",
+            "2xl": "blur(20px) saturate(160%)",
+            "navBar": "blur(22px) saturate(160%)"
+          },
+          "outerShadow": {
+            "button": "0 8px 24px rgba(214,141,80,0.25)",
+            "buttonLg": "0 12px 32px rgba(214,141,80,0.30)",
+            "hero": "0 20px 50px rgba(0,0,0,0.35)",
+            "heroLg": "0 24px 60px rgba(0,0,0,0.45)",
+            "navBar": "0 14px 36px rgba(0,0,0,0.50)",
+            "deviceBezel": "0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.12)"
+          }
+        }
+      },
+
+      "light": {
+        "_comment": "v1/legacy light theme, used for screens Glass never covered. Same accent remap applies.",
+        "bg": "#FAF6EF",
+        "canvasOutsideApp": "#EFEBE2",
+        "textPrimary": "#26221C",
+        "textSecondary": "#57503F",
+        "textTertiary": "#8A8071",
+        "textQuaternary": "#B8AE9C",
+        "placeholderFridgePhoto": "repeating-linear-gradient(45deg,#E3DACA 0 8px,#EDE5D6 8px 16px)",
+        "placeholderDishPhoto": "repeating-linear-gradient(45deg,#EFE7D9 0 8px,#F6F0E5 8px 16px)",
+        "avatarBg": "#DCCFB6",
+        "avatarText": "#6E5E41",
+        "cardBg": "#FFFFFF",
+        "cardBorder": {
+          "divider": "rgba(38,34,28,0.06)",
+          "card": "rgba(38,34,28,0.09)",
+          "input": "rgba(38,34,28,0.14)",
+          "strong": "rgba(38,34,28,0.16)",
+          "dashed": "rgba(38,34,28,0.22)"
+        },
+        "darkOverride": {
+          "_comment": "Cooking-mode screen only, dark even within the light theme",
+          "bg": "#181512",
+          "text": "#FFFFFF",
+          "textAlpha75": "rgba(255,255,255,0.75)",
+          "textAlpha55": "rgba(255,255,255,0.55)",
+          "textAlpha35": "rgba(255,255,255,0.35)",
+          "accent": "#E0A97B"
+        }
+      },
+
+      "android": {
+        "_comment": "Material 3, same accent remap",
+        "surface": "#F7FAF1",
+        "onSurface": "#1B1F19",
+        "onSurfaceVariant": "#74796F",
+        "onSurfaceVariantStroke": "#49454F",
+        "disabled": "#9AA093",
+        "accentLightSurface": "#F8EFE7",
+        "accentLightSurfaceAlt": "#EDF2E6",
+        "onAccentLightSurface": "#2A1B10",
+        "cardBg": "#FFFFFF",
+        "cardBorder": "#E0E6DA",
+        "divider": "#EDF0E8",
+        "proTintBg": "#F0DFD4",
+        "frameBorderChromeOnly": "rgba(116,119,117,0.5)"
+      },
+
+      "browserChromeOnly": {
+        "_comment": "Not product UI — the macOS browser-window wrapper only",
+        "tabBarBg": "#202124",
+        "tabBg": "#35363a",
+        "text": "#e8eaed",
+        "dim": "#9aa0a6",
+        "urlBarBg": "#282a2d",
+        "trafficLights": ["#ff5f57", "#febc2e", "#28c840"]
+      }
+    }
+  },
+
+  "typography": {
+    "fontFamilies": {
+      "display": "'Instrument Serif', Georgia, serif",
+      "ui": "'Schibsted Grotesk', system-ui, sans-serif",
+      "android": "Roboto, system-ui, sans-serif",
+      "mono": "ui-monospace, Menlo, monospace",
+      "iosSystemChromeOnly": "-apple-system, 'SF Pro', system-ui"
+    },
+    "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700&family=Roboto:wght@400;500;700&display=swap",
+    "scale": {
+      "displayXl": { "size": 44, "weight": 400, "family": "display", "lineHeight": 1.05 },
+      "displayLg": { "size": 34, "weight": 400, "family": "display", "lineHeight": 1.15 },
+      "displayMd": { "size": 28, "weight": 400, "family": "display", "lineHeight": 1.1 },
+      "displaySm": { "size": 23, "weight": 400, "family": "display", "lineHeight": 1.15 },
+      "wordmark": { "size": 27, "weight": 400, "italic": true, "family": "display", "lineHeight": 1 },
+      "bodyLg": { "size": 16, "weight": 700, "family": "ui", "lineHeight": 1.45 },
+      "bodyMd": { "size": 14.5, "weight": 400, "family": "ui", "lineHeight": 1.45 },
+      "bodySm": { "size": 12.5, "weight": 500, "family": "ui", "lineHeight": 1.35 },
+      "labelXs": { "size": 10.5, "weight": 700, "family": "ui", "letterSpacing": "0.1em", "textTransform": "uppercase", "lineHeight": 1 },
+      "monoCaption": { "size": 9.5, "weight": 400, "family": "mono", "lineHeight": 1 }
+    },
+    "weights": { "regular": 400, "medium": 500, "semibold": 600, "bold": 700 }
+  },
+
+  "spacing": {
+    "1": 4, "2": 8, "3": 12, "4": 16, "5": 20, "6": 24, "7": 28, "8": 32, "10": 40, "11": 44, "13": 52,
+    "screenEdgeX": 20,
+    "screenTopSafeMin": 70,
+    "screenTopSafeMax": 84,
+    "screenBottomFloatingNav": 120,
+    "webContentPadding": { "min": 38, "max": 52 },
+    "webSidebarWidth": 236
+  },
+
+  "radii": {
+    "xs": 4,
+    "sm": 8,
+    "chip": 12,
+    "tile": 16,
+    "cardSm": 20,
+    "cardMd": 22,
+    "cardLg": 24,
+    "listContainer": 26,
+    "hero": 28,
+    "heroLg": 30,
+    "androidDeviceBezel": 18,
+    "browserWindow": 10,
+    "iosDeviceBezel": 48,
+    "full": 999
+  },
+
+  "viewport": {
+    "ios": { "width": 402, "height": 874, "deviceBezelRadius": 48 },
+    "android": { "width": 412, "height": 892, "deviceBezelRadius": 18, "deviceBezelBorder": "8px solid rgba(116,119,117,0.5)" },
+    "web": { "width": 1240, "height": 800, "browserChromeRadius": 10 }
+  },
+
+  "elevation": {
+    "flush": { "boxShadow": "none" },
+    "raised": { "boxShadow": "0 8px 24px rgba(214,141,80,0.25)" },
+    "raisedLg": { "boxShadow": "0 12px 32px rgba(214,141,80,0.30)" },
+    "floating": { "boxShadow": "0 20px 50px rgba(0,0,0,0.35)" },
+    "floatingLg": { "boxShadow": "0 24px 60px rgba(0,0,0,0.45)" },
+    "navBar": { "boxShadow": "0 14px 36px rgba(0,0,0,0.50)" },
+    "deviceBezel": { "boxShadow": "0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.12)" }
+  },
+
+  "motion": {
+    "_comment": "Not specified anywhere in the source doc (fully static mockup). Recommendation only, not an extraction.",
+    "easingRecommended": "cubic-bezier(0.22, 1, 0.36, 1)",
+    "durationMicroMs": [150, 250],
+    "durationScreenMs": [300, 400]
+  }
+}

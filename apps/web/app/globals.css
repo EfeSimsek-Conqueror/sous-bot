@@ -1,0 +1,388 @@
+@import "tailwindcss";
+@import "./tokens.generated.css";
+
+/* Wires the tokens' font-family roles to the actual fonts loaded by
+   next/font in app/layout.tsx (see DESIGN.md §3). Kept out of
+   tokens.generated.css since that file is regenerated from tokens.json and
+   knows nothing about the Next.js font-loading mechanism. */
+:root {
+  --font-display: var(--font-instrument-serif), Georgia, serif;
+  --font-ui: var(--font-schibsted-grotesk), system-ui, sans-serif;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Tailwind v4 theme mapping — every utility class below is generated     */
+/* from the CSS custom properties in tokens.generated.css, which is in    */
+/* turn generated from _design/tokens.json. Never hand-add a raw hex here.*/
+/* ---------------------------------------------------------------------- */
+@theme inline {
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-pressed: var(--accent-pressed);
+  --color-accent-light: var(--accent-light);
+  --color-accent-disabled: var(--accent-disabled);
+  --color-on-accent: var(--on-accent);
+  --color-accent-subtle-bg-light: var(--accent-subtle-bg-light);
+  --color-accent-subtle-border-light: var(--accent-subtle-border-light);
+  --color-accent-subtle-bg-dark: var(--accent-subtle-bg-dark);
+  --color-accent-text-on-tint: var(--accent-text-on-tint);
+
+  --color-pro: var(--pro);
+  --color-pro-dark: var(--pro-dark);
+  --color-pro-text-on-tint: var(--pro-text-on-tint);
+  --color-pro-tint-bg: var(--pro-tint-bg);
+  --color-pro-tint-border: var(--pro-tint-border);
+  --color-danger: var(--danger);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-base: var(--text-base);
+  --color-text-on-cream: var(--text-on-cream);
+
+  --color-panel-low: var(--panel-bg-low);
+  --color-panel-mid: var(--panel-bg-mid);
+  --color-panel-high: var(--panel-bg-high);
+  --color-panel-hero: var(--panel-bg-hero);
+  --color-nav-bar: var(--nav-bar-bg);
+
+  --font-family-display: var(--font-display);
+  --font-family-ui: var(--font-ui);
+  --font-family-mono: var(--font-mono);
+
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-chip: var(--radius-chip);
+  --radius-tile: var(--radius-tile);
+  --radius-card-sm: var(--radius-cardSm);
+  --radius-card-md: var(--radius-cardMd);
+  --radius-card-lg: var(--radius-cardLg);
+  --radius-list: var(--radius-listContainer);
+  --radius-hero: var(--radius-hero);
+  --radius-hero-lg: var(--radius-heroLg);
+  --radius-full: var(--radius-full);
+
+  --ease-organic: var(--ease-organic);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: #101314;
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-base);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+::selection {
+  background: var(--accent-alpha-35);
+  color: var(--text-primary);
+}
+
+/* Focus ring — visible, accessible, consistent with the terracotta accent. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input,
+textarea {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Serif display face, always italic for the wordmark. */
+.font-display {
+  font-family: var(--font-display);
+}
+.font-ui {
+  font-family: var(--font-ui);
+}
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 27px;
+  line-height: 1;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Glass recipe — see DESIGN.md §2. Reusable elevation classes.           */
+/* ---------------------------------------------------------------------- */
+
+.glass-panel {
+  background: var(--panel-bg-mid);
+  -webkit-backdrop-filter: var(--blur-lg);
+  backdrop-filter: var(--blur-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shine-subtle);
+}
+
+.glass-panel-high {
+  background: var(--panel-bg-high);
+  -webkit-backdrop-filter: var(--blur-lg);
+  backdrop-filter: var(--blur-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shine-mid);
+}
+
+.glass-hero {
+  background: var(--panel-bg-hero);
+  -webkit-backdrop-filter: var(--blur-2xl);
+  backdrop-filter: var(--blur-2xl);
+  border: 1px solid var(--border-hero);
+  box-shadow: var(--shine-hero), var(--shadow-hero-lg);
+}
+
+.glass-nav {
+  background: var(--nav-bar-bg);
+  -webkit-backdrop-filter: var(--blur-nav);
+  backdrop-filter: var(--blur-nav);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shine-mid), var(--shadow-nav);
+}
+
+.glass-pill-button {
+  background: var(--panel-bg-mid);
+  -webkit-backdrop-filter: var(--blur-md);
+  backdrop-filter: var(--blur-md);
+  border: 1px solid var(--border-button);
+}
+
+.bloom-accent {
+  background-image: var(--bloom-accent);
+}
+.bloom-pro {
+  background-image: var(--bloom-pro);
+}
+
+/* Stronger ambient bloom for full-bleed dark surfaces (welcome background,
+ * home hero card). The token-driven .bloom-accent/.bloom-pro above read as
+ * near-invisible against this app's near-black glass background — per
+ * DESIGN.md §1.3 these should read as a clear warm glow, not a flat panel.
+ * Web-only, hand-tuned (not sourced from tokens.json) — same hues, higher
+ * peak opacity and a softer/larger falloff. */
+.bloom-accent-lg {
+  background-image: radial-gradient(65% 65% at 100% 0%, rgba(214, 141, 80, 0.5) 0%, rgba(214, 141, 80, 0) 70%);
+}
+.bloom-pro-lg {
+  background-image: radial-gradient(65% 65% at 0% 100%, rgba(217, 103, 61, 0.4) 0%, rgba(217, 103, 61, 0) 70%);
+}
+
+/* Primary pill CTA — accent fill, dark warm text (never white, see tokens). */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  box-shadow: var(--shadow-button-lg);
+  transition: transform var(--duration-micro) var(--ease-organic), filter var(--duration-micro) var(--ease-organic);
+}
+.btn-primary:hover {
+  filter: brightness(1.05);
+}
+.btn-primary:active {
+  transform: scale(0.98);
+  background: var(--accent-pressed);
+}
+.btn-primary:disabled {
+  background: var(--accent-disabled);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--panel-bg-mid);
+  -webkit-backdrop-filter: var(--blur-md);
+  backdrop-filter: var(--blur-md);
+  color: var(--text-base);
+  border: 1px solid var(--border-button);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 15px;
+  transition: background var(--duration-micro) var(--ease-organic), transform var(--duration-micro) var(--ease-organic);
+}
+.btn-secondary:hover {
+  background: var(--panel-bg-high);
+}
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+.btn-cream {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--text-base);
+  color: var(--text-on-cream);
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  transition: transform var(--duration-micro) var(--ease-organic);
+}
+.btn-cream:active {
+  transform: scale(0.98);
+}
+
+.btn-pro-outline-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: color-mix(in srgb, var(--pro-dark) 14%, transparent);
+  color: var(--pro-dark);
+  border: 1.5px solid color-mix(in srgb, var(--pro-dark) 45%, transparent);
+  border-radius: var(--radius-full);
+  font-weight: 700;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 8px 9px 14px;
+  border-radius: var(--radius-full);
+  background: var(--panel-bg-mid);
+  border: 1px solid var(--border-subtle);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text-base);
+}
+
+.chip-uncertain {
+  background: color-mix(in srgb, var(--pro-dark) 12%, transparent);
+  border-color: color-mix(in srgb, var(--pro-dark) 45%, transparent);
+  color: var(--pro-dark);
+}
+
+.chip-dashed {
+  background: transparent;
+  border: 1.5px dashed var(--accent-alpha-45);
+  color: var(--accent);
+}
+
+/* Striped placeholder used for both fridge photos and AI dish photos —   */
+/* the async-loading component per DESIGN.md §"Async image placeholder". */
+.placeholder-stripe {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.05) 0 8px,
+    rgba(255, 255, 255, 0.08) 8px 16px
+  );
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.divider-hairline {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.text-label-xs {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Scrollbar de-emphasis for horizontally-scrolling filter rows etc. */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ---- Landing page motion (staggered hero entrance + scroll reveal) ---- */
+@keyframes lp-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero elements animate on load; --d sets the stagger delay. */
+.lp-enter {
+  opacity: 0;
+  animation: lp-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Scroll-reveal: hidden until .is-in is toggled by the IntersectionObserver. */
+.lp-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0ms);
+  will-change: opacity, transform;
+}
+.lp-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Subtle floating drift for hero accent objects. */
+@keyframes lp-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.lp-float {
+  animation: lp-float 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .lp-enter,
+  .lp-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
