@@ -27,6 +27,7 @@ interface AuthContextValue {
   usageLimit: number | null;
   usageRemaining: number | null;
   mockSignIn: () => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
   refreshUsage: () => Promise<void>;
@@ -101,6 +102,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (data.user) await loadAll(data.user.id);
   }, [loadAll]);
 
+  // Real Google OAuth (PKCE). Redirects the browser to Google; on return to
+  // the app the ?code is exchanged automatically (detectSessionInUrl) and
+  // onAuthStateChange loads the profile. redirectTo must be in the Supabase
+  // Auth "Redirect URLs" allowlist.
+  const signInWithGoogle = useCallback(async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin,
+        queryParams: { prompt: "select_account" },
+      },
+    });
+    if (error) throw error;
+  }, []);
+
   const signOut = useCallback(async () => {
     await supabase.auth.signOut();
   }, []);
@@ -129,11 +145,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       usageLimit,
       usageRemaining,
       mockSignIn,
+      signInWithGoogle,
       signOut,
       refreshProfile,
       refreshUsage,
     }),
-    [loading, session, profile, subscription, isPro, usageUsed, usageLimit, usageRemaining, mockSignIn, signOut, refreshProfile, refreshUsage],
+    [loading, session, profile, subscription, isPro, usageUsed, usageLimit, usageRemaining, mockSignIn, signInWithGoogle, signOut, refreshProfile, refreshUsage],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

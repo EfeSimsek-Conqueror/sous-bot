@@ -23,9 +23,8 @@
  * of the source's Google Fonts <link>. Reduced motion is respected.
  */
 
-import { useEffect, useRef } from "react";
-import { useAuth } from "../lib/auth/auth-context";
-import { useToast } from "./Toast";
+import { useEffect, useRef, useState } from "react";
+import { SignInSheet } from "./SignInSheet";
 
 const FEATURES: { icon: string; title: string; body: string; pro: boolean }[] = [
   { icon: "a", title: "Ingredient detection", body: "One photo of your fridge or pantry becomes a full ingredient list. Nothing to type.", pro: false },
@@ -376,29 +375,14 @@ const MARKUP = `
 `;
 
 export function LandingPage() {
-  const { mockSignIn } = useAuth();
-  const toast = useToast();
   const rootRef = useRef<HTMLDivElement>(null);
+  const [signInOpen, setSignInOpen] = useState(false);
 
-  // Keep the latest enter() handler reachable from the vanilla listeners wired
-  // once in the effect below, without re-running the effect on every render.
-  // A busy guard stops a double-tap from spawning two anonymous users; on
-  // success the component unmounts (session appears) so it never needs reset.
-  const busyRef = useRef(false);
-  const enterRef = useRef(() => {});
-  enterRef.current = async () => {
-    if (busyRef.current) return;
-    busyRef.current = true;
-    try {
-      await mockSignIn();
-    } catch (err) {
-      busyRef.current = false;
-      toast.show(
-        err instanceof Error ? err.message : "Couldn't start — please try again",
-        "error"
-      );
-    }
-  };
+  // The vanilla click delegation wired in the effect below calls this to open
+  // the sign-in modal. Held in a ref so the effect can stay []-deps while
+  // always invoking the current opener.
+  const openSignInRef = useRef(() => {});
+  openSignInRef.current = () => setSignInOpen(true);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -505,7 +489,7 @@ export function LandingPage() {
       const cta = target?.closest?.("[data-cta-enter]");
       if (cta) {
         ev.preventDefault();
-        enterRef.current();
+        openSignInRef.current();
         return;
       }
       const go = target?.closest?.("[data-goto]");
@@ -581,6 +565,7 @@ export function LandingPage() {
     <div ref={rootRef} className="sb-landing">
       <style dangerouslySetInnerHTML={{ __html: BASE_CSS }} />
       <div dangerouslySetInnerHTML={{ __html: MARKUP }} />
+      {signInOpen && <SignInSheet onClose={() => setSignInOpen(false)} />}
     </div>
   );
 }

@@ -21,6 +21,9 @@ export const supabase = createClient<Database>(url, anonKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
-    detectSessionInUrl: false,
+    // PKCE + URL detection so the Google OAuth redirect back to the app
+    // (…/?code=…) is automatically exchanged for a session on load.
+    flowType: "pkce",
+    detectSessionInUrl: true,
   },
 });
